@@ -1,9 +1,18 @@
 ---
-title: "A post of Markdown elements"
-description: "This post is for testing and listing a number of different markdown elements"
+title: "A post reference"
+description: "A reference guide to demo everything this template can do"
 publishDate: "22 Feb 2023"
-tags: ["test", "markdown"]
+updatedDate: "24 December 2023"
+ogImage: "/social-card.png"
+coverImage:
+  src: "./cover.png"
+  alt: "Astro build wallpaper"
+tags: ["test", "markdown", "image"]
+draft: true
 ---
+
+Refer to ![here](https://github.com/chrismwilliams/astro-theme-cactus#adding-posts) for more info for the frontmatter.
+Also note that the ogImage image frontmatter references to the `/public` folder
 
 ## This is a H2 Heading
 
