@@ -1,31 +1,42 @@
 ---
-import { Image } from "astro:assets";
+// import { Image } from "astro:assets";
 
 import PageLayout from "@/layouts/Base";
-import aboutImg from "@/assets/about-astro.png";
+// import aboutImg from "@/assets/about-astro.png";
 
 const meta = {
 	title: "About",
-	description: "I'm a starter theme for Astro.build",
+	description: "Some information about the website's owner, Gravydigger",
 };
 ---
 
 <PageLayout meta={meta}>
 	<div class="space-y-6">
 		<h1 class="title">About</h1>
+		<p>Hi, I'm Gravydigger (Though most just call me Gravy)!</p>
 		<p>
-			Hi, I’m a starter Astro. I’m particularly great for getting you started with your own blogging
-			website.
+			I'm an Australian with a bachelor degree in Computer Science, and create personal SysAdmin &
+			coding projects for fun! As a matter of fact, this website is maintained by me as a personal
+			project using a theme called <a
+				class="cactus-link inline-block"
+				href="https://github.com/chrismwilliams/astro-cactus"
+				target="_blank"
+				rel="noopener noreferrer"
+				aria-label="github repository">Astro Cactus</a
+			>. I also host D&D sessions for a small group of friends weekly using FoundryVTT, as well as
+			host a private instance of Nextcloud for me to access my files remotely. I also am currently
+			starting to form a homelab to better learn how to use a servers to improve my day-to-day life,
+			or to learn something new (or both!).
 		</p>
-		<div class="flex justify-center">
+		<!-- <div class="flex justify-center">
 			<Image
 				src={aboutImg}
 				alt="A cartoon cactus looking at the 'Astro.build' logo"
 				loading="eager"
 				fetchpriority="high"
 			/>
-		</div>
-		<p>Here are my some of my awesome built in features:</p>
+		</div> -->
+		<!-- <p>Here are my some of my awesome built in features:</p>
 		<ul class="list-inside list-disc">
 			<li>I'm ultra fast as I'm a static site</li>
 			<li>I'm fully responsive</li>
@@ -34,15 +45,15 @@ const meta = {
 			<li>I have Tailwind CSS styling</li>
 			<li>Shiki code syntax highlighting</li>
 			<li>Satori for auto generating OG images for blog posts</li>
-		</ul>
+		</ul> -->
 		<p>
-			Clone or fork my <a
+			You can view the source code of this website <a
 				class="cactus-link inline-block"
 				href="https://github.com/chrismwilliams/astro-cactus"
 				target="_blank"
 				rel="noopener noreferrer"
-				aria-label="github repository">repo</a
-			> if you like me!
+				aria-label="github repository">here</a
+			> if you like too!
 		</p>
 	</div>
 </PageLayout>
