@@ -1,7 +1,7 @@
 ---
 import { Icon } from "astro-icon";
 
-/** 
+/**
 	Uses https://github.com/natemoo-re/astro-icon#readme
 	Find icons @ https://icones.js.org/
 */
@@ -14,29 +14,28 @@ const socialLinks: Array<{
 	{
 		name: "mdi:github",
 		friendlyName: "Github",
-		link: "https://github.com/chrismwilliams/astro-cactus",
+		link: "https://github.com/Gravydigger",
 	},
 	{
-		name: "mdi:mastodon",
-		friendlyName: "Mastodon",
-		link: "#",
+		name: "mdi:coffee",
+		friendlyName: "Ko-Fi",
+		link: "https://ko-fi.com/gravydigger",
 	},
 	{
-		name: "mdi:linkedin",
-		friendlyName: "LinkedIn",
-		link: "#",
+		name: "mdi:twitter",
+		friendlyName: "Twitter",
+		link: "https://twitter.com/Gravydigger56",
 	},
 	{
-		name: "mdi:email",
-		friendlyName: "email",
-		link: "mailto:astro-cactus@chriswilliams.dev",
-		isWebmention: true,
+		name: "mdi:youtube",
+		friendlyName: "Youtube",
+		link: "https://www.youtube.com/@gravydigger",
 	},
 ];
 ---
 
 <div class="flex flex-wrap items-end gap-x-4">
-	<p>Find me on</p>
+	<p class="self-center">Find me on</p>
 	<ul class="flex flex-1 items-center gap-x-2 sm:flex-initial">
 		{
 			socialLinks.map(({ link, name, friendlyName, isWebmention }) => (
