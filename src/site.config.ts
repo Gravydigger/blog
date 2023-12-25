@@ -6,7 +6,7 @@ export const siteConfig: SiteConfig = {
 	// Meta property used to construct the meta title property, found in src/components/BaseHead.astro L:11
 	title: "Gravy's Domain",
 	// Meta property used as the default description meta property
-	description: "A blog filled about IT, homelabbing, and other stuff",
+	description: "A blog filled about IT, homelabbing, and other bits 'n bobs.",
 	// HTML lang property, found in src/layouts/Base.astro L:18
 	lang: "en-AU",
 	// Meta property, found in src/components/BaseHead.astro L:42
