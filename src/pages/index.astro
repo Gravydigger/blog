@@ -1,4 +1,5 @@
 ---
+import { Icon } from "astro-icon";
 import PageLayout from "@/layouts/Base";
 import PostPreview from "@/components/blog/PostPreview";
 import SocialList from "@/components/SocialList";
@@ -63,7 +64,16 @@ const cactusTech: Array<{ title: string; desc: string; href: string }> = [
 		<SocialList />
 	</section>
 	<section aria-label="Blog post list" class="mt-16">
-		<h2 class="title mb-4 text-xl">Posts</h2>
+		<span class="flex">
+			<h2 class="title mb-4 text-xl">Posts</h2><a
+				class="inline-block p-1 sm:hover:text-link"
+				href="/rss.xml"
+				target="_blank"
+			>
+				<Icon class="h-5 w-5" name="mdi:rss" aria-hidden="true" focusable="false" />
+				<span class="sr-only">RSS</span>
+			</a>
+		</span>
 		<ul class="space-y-4 sm:space-y-2">
 			{
 				allPostsByDate.map((p) => (

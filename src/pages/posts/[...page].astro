@@ -1,6 +1,7 @@
 ---
 import type { Page, GetStaticPaths } from "astro";
 import type { CollectionEntry } from "astro:content";
+import { Icon } from "astro-icon";
 import PageLayout from "@/layouts/Base";
 import PostPreview from "@/components/blog/PostPreview";
 import Pagination from "@/components/Paginator";
@@ -42,7 +43,15 @@ const paginationProps = {
 ---
 
 <PageLayout meta={meta}>
-	<h1 class="title mb-6">Posts</h1>
+	<span class="flex">
+		<h1 class="title mb-6">Posts</h1><a
+			class="inline-block p-1 sm:hover:text-link"
+			href="/rss.xml"
+			target="_blank"
+		>
+			<Icon class="h-6 w-6" name="mdi:rss" aria-hidden="true" focusable="false" />
+		</a>
+	</span>
 	<div class="grid gap-y-16 sm:grid-cols-[3fr_1fr] sm:gap-x-8">
 		<section aria-label="Blog post list">
 			<ul class="space-y-8 text-start">
