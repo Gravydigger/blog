@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://blog.gravydigger.net/sitemap-index.xml
+Sitemap: https://gravydigger.net/sitemap-index.xml
