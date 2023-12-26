@@ -11,7 +11,7 @@ tags: ["test", "markdown", "image"]
 draft: true
 ---
 
-Refer to ![here](https://github.com/chrismwilliams/astro-theme-cactus#adding-posts) for more info for the frontmatter.
+Refer to [here](https://github.com/chrismwilliams/astro-theme-cactus#adding-posts) for more info for the frontmatter.
 Also note that the ogImage image frontmatter references to the `/public` folder
 
 ## This is a H2 Heading
@@ -86,6 +86,29 @@ Start numbering with offset:
 
 57. foo
 1. bar
+
+## Maths
+
+<style>
+  .katex-version {display: none;}
+  .katex-version::after {content:"0.10.2 or earlier";}
+</style>
+<span class="katex">
+  <span class="katex-mathml">The KaTeX stylesheet is not loaded!</span>
+  <span class="katex-version rule">KaTeX stylesheet version: </span>
+</span>
+
+An example of $$\LaTeX$$ inline with text: $$\sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}$$
+
+An example in display mode:
+
+$$
+\LaTeX
+$$
+
+$$
+\sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}
+$$
 
 ## Code
 
