@@ -30,7 +30,7 @@ Before we install anything to the disk, we need to prepare our installation medi
 
 ### Acquire the installation image
 
-Head to the Arch Wiki [download's](https://archlinux.org/download/) page & grab the ISO. This will need to be flashed to a USB. [Rufus](https://rufus.ie) is a good pick or [Ventoy](https://www.ventoy.net) if you like having a dedicated USB with many types of ISOs. You might need change the boot order in the UEFI to load the Arch install from the USB.
+Head to the Arch Wiki [download](https://archlinux.org/download/) page & grab the ISO. This will need to be flashed to a USB. [Rufus](https://rufus.ie) is a good pick or [Ventoy](https://www.ventoy.net) if you like having a dedicated USB with many types of ISOs. You might need change the boot order in the UEFI to load the Arch install from the USB.
 
 ### Connecting the internet
 
@@ -279,7 +279,7 @@ EnableNetworkConfiguration=true
 And finally, we need to set our hostname. Imma pick `GravyArch`:
 
 ```
-echo "GravyArch" | tee /etc/hostname
+# echo "GravyArch" | tee /etc/hostname
 ```
 
 #### Initramfs
@@ -299,7 +299,7 @@ Then we need to regenerate all of the initramfs images:
 We'll want to set a root password (we'll disable root login after our installation later for security).
 
 ```
-passwd
+# passwd
 ```
 
 It's generally unwise to do everything in root once our system is installed, so let's add a user. I'll use the username `gravy` and add the user to the group `wheel`.
@@ -311,13 +311,13 @@ It's generally unwise to do everything in root once our system is installed, so 
 Then give the user a password.
 
 ```
-passwd gravy
+# passwd gravy
 ```
 
 Then to give our user root privileges via `sudo`, we'll need to configure `sudo` and uncomment the line `%wheel ALL=(ALL) ALL`:
 
 ```
-EDITOR=nano visudo
+# EDITOR=nano visudo
 ```
 
 And now our user will have sudo privileges!
