@@ -1,6 +1,6 @@
 ---
 title: "Installing Arch Linux, a Guided Walkthrough"
-description: "A guide to installing Arch Linux in a way that's a bit more guided, and can be used as a reference point for your own installation"
+description: "A guide to installing Arch Linux in a way that's a bit more guided, and can be used as a reference point for your own installation."
 publishDate: "25 Dec 2023"
 tags: ["tech", "arch", "it"]
 ---
@@ -9,20 +9,19 @@ _NOTICE: Always cross-reference the [Arch Linux Wiki](https://wiki.archlinux.org
 
 ## Installing Arch
 
-Installing Arch is a rather daunting task for most beginners, considering it's a rather large step up from what you might have already used, like Ubuntu. This guide hopes to help simplify the sheer amount of information provided by the Arch Wiki into a more directed guide in a way that I like to configure my system. If you do want to follow along, I'd strongly recommend booting up a VM in your preferred software and make snapshots along the way. I won't cover everything in detail & you'll most likely have to troubleshoot as things diverge, so make sure you also have the [Arch wiki installation guide](https://wiki.archlinux.org/title/Installation_guide) in another tab for easy reference.
+Installing Arch Linux is a rather daunting task for most beginners, considering it's a rather large step up from what you might have already used, like Ubuntu. This guide hopes to help simplify the sheer amount of information provided by the Arch Wiki into a more directed guide in a way that I like to configure my system. If you do want to follow along, I'd strongly recommend booting up a VM in your preferred software and make snapshots along the way. I won't cover everything in detail & you'll most likely have to troubleshoot as things diverge, so make sure you also have the [Arch wiki installation guide](https://wiki.archlinux.org/title/Installation_guide) in another tab for easy reference.
 
 ## Objectives & Requirements
 
 Once you've finished with this guide, you'll have achieved a system that has:
 
 - LVM with encryption
-- 2 LVM volumes, one for `/home`, and the other for `/`
 - Systemd-boot as the bootloader
 - A swapfile
 - KDE plasma as the desktop environment
-- Secure boot enabled
+- Secure boot enabled (advanced)
 
-Note that if you want to do this, you'll need to have a computer that supports 64-bit UEFI and have secure boot disabled, as well as have the drive to figure stuff out when things (inevitably) go wrong.
+Note that if you want to do this, you'll need to have a computer that supports 64-bit UEFI and have secure boot disabled, as well as have the drive to figure things out when things (inevitably) go wrong.
 
 ## Pre-installation
 
@@ -30,11 +29,11 @@ Before we install anything to the disk, we need to prepare our installation medi
 
 ### Acquire the installation image
 
-Head to the Arch Wiki [download](https://archlinux.org/download/) page & grab the ISO. This will need to be flashed to a USB. [Rufus](https://rufus.ie) is a good pick or [Ventoy](https://www.ventoy.net) if you like having a dedicated USB with many types of ISOs. You might need change the boot order in the UEFI to load the Arch install from the USB.
+Head to the Arch Linux [download](https://archlinux.org/download/) page & grab the ISO. This will need to be flashed to a USB. Either [Rufus](https://rufus.ie) or [Etcher](https://etcher.balena.io/) are good picks. You might also need to change the boot order in the UEFI to load the Arch install from the USB.
 
 ### Connecting the internet
 
-Ah, the bane of Arch laptop users everywhere. Now if your using Ethernet or a VM, you should have internet already (`ping -c 5 archlinux.org` to verify) and can move onto the next step; if your using Wi-Fi, let's get you up and running.
+Ahhh, the bane of Arch laptop users everywhere. Now if your using Ethernet or a VM, you should have internet already (`ping -c 5 archlinux.org` to verify) and can move onto the next step; if your using Wi-Fi, let's get you up and running.
 We'll be using [iwctl](https://wiki.archlinux.org/title/Iwd#iwctl) to help us connect.
 
 First, we'll need to make sure its daemon is running, then start the interactive prompt:
@@ -50,7 +49,7 @@ From here, we'll need to see what adaptors are available:
 [iwd]# device list
 ```
 
-Pick an adaptor (like `wlan0` for example if it's there), then run the following commands:
+Pick an adaptor, then run the following commands:
 
 ```
 [iwd]# station <device> scan
@@ -75,16 +74,16 @@ If everything is working, we can move on.
 ### Partitioning the disk
 
 I hope you backed up your data on your drive, cause this step is gonna cause **data loss**.
-First, you'll need to see what device your storage drive is with [fdisk](https://wiki.archlinux.org/title/Fdisk):
+First, you'll need to see what device your storage drive is using [fdisk](https://wiki.archlinux.org/title/Fdisk):
 
 ```
 # fdisk -l
 ```
 
-You should see your disk assigned as `/dev/sda` or `/dev/nvme0n1`. In my case, it's `/dev/sda`, which I'll be continuing to use for this tutorial.
+You should see your disk assigned as something like `/dev/sda` or `/dev/nvme0n1`. In my case, it's `/dev/sda`, which I'll be continuing to use for this tutorial.
 ![The output of `fdisk -l` in the CLI](./fdisk.png)
 
-We'll then want to go into the interactive prompt.
+We'll then want to go into the interactive prompt:
 
 ```
 # fdisk /dev/sda
@@ -108,7 +107,7 @@ Once you're happy, type `w` to confirm the changes to disk, which you'll now be 
 
 ### LVM with Encryption
 
-So what is LVM? LVM stands for Logical Volume Manager, which allows our files to be stores in a volume instead of directly on the partition. This allows for easy dynamic resizing of volumes, something which is quite difficult to do with partitions. Regardless if you end up using it or not, its always good to have just in case, as there is no downside for having it. These volumes will reside inside our partition which will be encrypted with LUKS, with more info found on the [wiki](https://wiki.archlinux.org/title/Dm-crypt/Encrypting_an_entire_system#LVM_on_LUKS).
+So, what is LVM? LVM stands for Logical Volume Manager, which allows our files to be stored in a volume instead of directly on the partition. This allows for easy dynamic resizing of volumes, something which is quite difficult to do with partitions. Regardless if you end up using it or not, it's always good to have just in case, as there is no downside for having it. These volumes will reside inside our partition which will be encrypted with LUKS, with more info found on the [wiki](https://wiki.archlinux.org/title/Dm-crypt/Encrypting_an_entire_system#LVM_on_LUKS).
 
 #### Encrypting the partition
 
@@ -168,29 +167,25 @@ And mount the file systems:
 # mount --mkdir /dev/sda1 /mnt/boot
 ```
 
-Finally, we'll create a `fstab` file to allow our operating system to know what devices it needs to mount at boot. Once you generate the fstab file, print it out with `cat` and see if everything looks good.
+Finally, we'll create a `fstab` file to allow our operating system to know what devices it needs to mount at boot. Once you generate the `fstab` file, print it out with `cat` and see if everything looks good.
 
 ```
 # genfstab -U /mnt >> /mnt/etc/fstab
 # cat /mnt/etc/fstab
 ```
 
-<!-- // cSpell:disable -->
-
-Your `fstab` file should look similar to mine, ignoring the UUIDs (note that the last line is wrapped). For the last line, you'll need to change last line to contain `fmask=0077,dmask=0077`.
-
-<!-- // cSpell:enable -->
+Your `fstab` file should look similar to mine, ignoring the UUIDs (note that the last line is wrapped). For the last line, you'll need to change it to contain `fmask=0077,dmask=0077`.
 
 If the rest of the file doesn't match the image below, read through the above again to make sure you haven't missed a step, and refer to the [Arch Wiki](https://wiki.archlinux.org/) to make sure that the information here isn't outdated.
 ![What the resulting fstab file should look like](./fstab.png)
 
 ## Installation & Configuration
 
-Now we've set up everything, now we can actually start to install Arch Linux onto your storage disk, how exciting!
+Now we've set up everything, now we can actually start to install Arch Linux onto your system, how exciting!
 
 ### Installation
 
-We'll need to install the base package, as well as Linux itself of course! Now as for packages, I'd recommend installing both `linux` and `linux-lts` plus their headers, just in case something breaks in the kernel and you need to head to a known LTS version. However I've personally never needed to use the `linux-lts`. If you're following along in a VM, you can omit installing `linux-firmware`.
+We'll need to install the base package, as well as Linux itself of course! Now as for packages, I'd recommend installing both `linux` and `linux-lts` plus their headers, just in case something breaks in the kernel, and you need to head to a known LTS version. However, I've personally never needed to use the `linux-lts`. If you're following along in a VM, you can omit installing `linux-firmware`.
 
 ```
 # pacstrap -K /mnt base linux linux-headers linux-lts linux-lts-headers linux-firmware
@@ -210,25 +205,21 @@ There are some additional packages we'll need to install:
 # pacman -S lvm2 networkmanager
 ```
 
-This will provide LVM support, network managing to connect to the internet.
+This will provide LVM support and network management to connect to the internet.
 
-Now the base package doesn't contain all of the tools we might like to use in our installation.
-
-Here's a list of packages you might wanna consider installing:
+Now as the `base` package doesn't contain all of the tools we might like to use in our installation, here's a list of packages you might wanna consider installing:
 
 - `nano` or `vim` : CLI text editors. If you're not familiar with `vim`, go with `nano`.
 - `base-devel` : A collection of development packages.
 - `iwd` `wpa_supplicant` : If you want Wi-Fi support you'll need these. Recommended even if you're not going to use Wi-Fi in case you need them down the road.
 - `man-db man-pages` : Used for reading man pages.
-- `amd-ucode` or `intel-ucode` : Download the package matching your CPU. These provided patches to your CPU.
+- `amd-ucode` or `intel-ucode` : Download the package matching your CPU. These provide microcode updates to your CPU.
 
 ### Configuration
 
 Time to configure!
 
 #### Time zones
-
-<!-- // cSpell:disable -->
 
 We'll also want to configure the appropriate time zone for your location. You can view your region and city in `/usr/share/zoneinfo/`. For example, if you lived in Sydney Australia, you'd write the following command:
 
@@ -241,8 +232,6 @@ Then configure the hardware clock:
 ```
 # hwclock --systohc
 ```
-
-<!--// cSpell:enable -->
 
 #### Localization
 
@@ -269,7 +258,7 @@ Let's make sure networking will be up and running once we finish our install:
 # systemctl enable wpa_supplicant.service
 ```
 
-We also need to setup the DHCP client, which we'll do with `iwd`. Create a new file at `/etc/iwd/main.conf`, and add the following to the file:
+We also need to setup the DHCP client if your using Wi-Fi, which we'll do with `iwd`. Create a new file at `/etc/iwd/main.conf`, and add the following to the file:
 
 ```
 [General]
@@ -284,11 +273,11 @@ And finally, we need to set our hostname. Imma pick `GravyArch`:
 
 #### Initramfs
 
-As we have both LVM & encryption, we'll need to modify the initramfs. When editing `/etc/mkinitcpio.conf`, find the first uncommented like that says `HOOKS`. From there, you'll want to add the works `encrypt lvm2` in between `block` & `filesystems`. Note that the order is important.
+As we have both LVM & encryption, we'll need to modify the initramfs. When editing `/etc/mkinitcpio.conf`, find the first uncommented line that starts with `HOOKS`. From there, you'll want to add the words `encrypt lvm2` in between `block` & `filesystems`. Note that the order is important.
 
 ![What the mkinitcpio.conf file should look like after modification](./mkinitcpio.png)
 
-Then we need to regenerate all of the initramfs images:
+Then we need to regenerate all of the initramfs:
 
 ```
 # mkinitcpio -P
@@ -302,7 +291,7 @@ We'll want to set a root password (we'll disable root login after our installati
 # passwd
 ```
 
-It's generally unwise to do everything in root once our system is installed, so let's add a user. I'll use the username `gravy` and add the user to the group `wheel`.
+As it's generally unwise to do everything in root once our system is installed, let's add a user. I'll use the username `gravy` and add the user to the group `wheel`.
 
 ```
 # useradd -mg users -G wheel gravy
@@ -324,7 +313,7 @@ And now our user will have sudo privileges!
 
 ### The Bootloader
 
-Our system is now finally configured, but it won't boot without a bootloader! We'll be using systemd-boot as mentioned before, which has already been pre-installed onto our install. To install systemd-boot, we run the following command:
+Our system is now finally configured, but it won't boot without a bootloader! We'll be using systemd-boot as mentioned before, which has already been pre-installed onto our system. To install systemd-boot, we run the following command:
 
 ```
 # bootctl install
@@ -345,7 +334,7 @@ This is the config file for systemd-boot. Now we need to define the boot entries
 cryptsetup config --label="arch_os" /dev/sda2
 ```
 
-Now copy the following text into `/boot/loader/entries/arch.conf` (assuming you installed the `amd-ucode` and `linux` package):
+Now copy the following text into `/boot/loader/entries/arch.conf` (assuming you installed the `amd-ucode` and `linux` package, change the text as needed to support your system):
 
 ```
 title   Arch Linux
@@ -389,8 +378,8 @@ Now I'm not sure about you, but interacting with the raw CLI gets old rather qui
 # pacman -S plasma-meta kde-applications xorg-server
 ```
 
-We'll also need to install the graphics drivers. If you use intel or amd graphics, use the `mesa` package. If you have use Nvidia, you'll need to install `nvidia` and/or `nvidia-lts` depending on what linux version you installed.
-If your using a VM, install `virtualbox-guest-utils` and enable `vboxservice.service`.
+We'll also need to install the graphics drivers. If you use Intel or AMD graphics, use the `mesa` package. If you have use Nvidia, you'll need to install `nvidia` and/or `nvidia-lts` depending on what linux version you installed.
+If you're using a VM, install `virtualbox-guest-utils` and enable `vboxservice.service`.
 We also need to enable our display manager (the lock screen):
 
 ```
@@ -453,12 +442,12 @@ We'll be using `sbctl` to manage and setup secure boot. Just be advised that it 
 You'll need to install the following packages:
 
 - `efibootmgr` : Configuration of boot order, and anything else with the UEFI
-- `sbctl` : Configuration and manage Secure Boot
+- `sbctl` : Assisted Configuration and management Secure Boot
 - `shim-signed` : A pre-signed bootloader (needs to be installed from the AUR)
 
 #### Enable Setup Mode
 
-You'll first need the enter the UEFI and change Secure Boot to "Setup Mode". As each manufacturer has as a different layout, you'll have to figure this out on your own, but it will most likely be under "Security" banner. You might also need leave secure boot disabled.
+You'll first need the enter the UEFI and change Secure Boot to "Setup Mode". As each manufacturer has a different layout, you'll have to figure this out on your own, but it will most likely be under "Security" banner.
 
 #### Setting up shim
 

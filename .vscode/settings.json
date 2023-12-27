@@ -13,39 +13,5 @@
 		"astro", // Enable .astro
 		"typescript", // Enable .ts
 		"typescriptreact"
-	],
-	"cSpell.words": [
-		"archlinux",
-		"bootctl",
-		"bootloader",
-		"BOOTX",
-		"cryptdevice",
-		"cryptlvm",
-		"cryptsetup",
-		"devel",
-		"efibootmgr",
-		"fdisk",
-		"genfstab",
-		"grubx",
-		"iwctl",
-		"luks",
-		"lvreduce",
-		"mkinitcpio",
-		"networkmanager",
-		"nvme",
-		"pacman",
-		"pacstrap",
-		"sbctl",
-		"shimx",
-		"swapfile",
-		"swapon",
-		"ucode",
-		"UEFI",
-		"vboxservice",
-		"Ventoy",
-		"volgroup",
-		"wlan",
-		"Xorg"
-	],
-	"cSpell.language": "en-GB"
+	]
 }
