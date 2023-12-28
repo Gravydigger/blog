@@ -31,9 +31,9 @@ Before we install anything to the disk, we need to prepare our installation medi
 
 Head to the Arch Linux [download](https://archlinux.org/download/) page & grab the ISO. This will need to be flashed to a USB. Either [Rufus](https://rufus.ie) or [Etcher](https://etcher.balena.io/) are good picks. You might also need to change the boot order in the UEFI to load the Arch install from the USB.
 
-### Connecting the internet
+### Connecting to the internet
 
-Ahhh, the bane of Arch laptop users everywhere. Now if your using Ethernet or a VM, you should have internet already (`ping -c 5 archlinux.org` to verify) and can move onto the next step; if your using Wi-Fi, let's get you up and running.
+Ahhh, the bane of Arch laptop users everywhere. Now if you're using Ethernet or a VM, you should have internet already (`ping -c 5 archlinux.org` to verify) and can move onto the next step; if you're using Wi-Fi, let's get you up and running.
 We'll be using [iwctl](https://wiki.archlinux.org/title/Iwd#iwctl) to help us connect.
 
 First, we'll need to make sure its daemon is running, then start the interactive prompt:
@@ -73,7 +73,7 @@ If everything is working, we can move on.
 
 ### Partitioning the disk
 
-I hope you backed up your data on your drive, cause this step is gonna cause **data loss**.
+I hope you backed up your data on your drive, 'cause this step is gonna cause **data loss**.
 First, you'll need to see what device your storage drive is using [fdisk](https://wiki.archlinux.org/title/Fdisk):
 
 ```
@@ -107,7 +107,7 @@ Once you're happy, type `w` to confirm the changes to disk, which you'll now be 
 
 ### LVM with Encryption
 
-So, what is LVM? LVM stands for Logical Volume Manager, which allows our files to be stored in a volume instead of directly on the partition. This allows for easy dynamic resizing of volumes, something which is quite difficult to do with partitions. Regardless if you end up using it or not, it's always good to have just in case, as there is no downside for having it. These volumes will reside inside our partition which will be encrypted with LUKS, with more info found on the [wiki](https://wiki.archlinux.org/title/Dm-crypt/Encrypting_an_entire_system#LVM_on_LUKS).
+So, what is LVM? LVM stands for Logical Volume Manager, which allows our files to be stored in a volume instead of directly on the partition. This allows for easy dynamic resizing of volumes, something which is quite difficult to do with partitions. Regardless of whether you end up using it or not, it's always good to have just in case, as there is no downside for having it. These volumes will reside inside our partition which will be encrypted with LUKS, with more info found on the [wiki](https://wiki.archlinux.org/title/Dm-crypt/Encrypting_an_entire_system#LVM_on_LUKS).
 
 #### Encrypting the partition
 
@@ -185,7 +185,7 @@ Now we've set up everything, now we can actually start to install Arch Linux ont
 
 ### Installation
 
-We'll need to install the base package, as well as Linux itself of course! Now as for packages, I'd recommend installing both `linux` and `linux-lts` plus their headers, just in case something breaks in the kernel, and you need to head to a known LTS version. However, I've personally never needed to use the `linux-lts`. If you're following along in a VM, you can omit installing `linux-firmware`.
+We'll need to install the base package, as well as Linux itself, of course! Now, as for packages, I'd recommend installing both `linux` and `linux-lts` plus their headers, just in case something breaks in the kernel and you need to head to a known LTS version. However, I've personally never needed to use the `linux-lts`. If you're following along in a VM, you can omit installing `linux-firmware`.
 
 ```
 # pacstrap -K /mnt base linux linux-headers linux-lts linux-lts-headers linux-firmware
@@ -211,7 +211,7 @@ Now as the `base` package doesn't contain all of the tools we might like to use 
 
 - `nano` or `vim` : CLI text editors. If you're not familiar with `vim`, go with `nano`.
 - `base-devel` : A collection of development packages.
-- `iwd` `wpa_supplicant` : If you want Wi-Fi support you'll need these. Recommended even if you're not going to use Wi-Fi in case you need them down the road.
+- `iwd` `wpa_supplicant` : If you want Wi-Fi support, you'll need these. Recommended even if you're not going to use Wi-Fi, in case you need them down the road.
 - `man-db man-pages` : Used for reading man pages.
 - `amd-ucode` or `intel-ucode` : Download the package matching your CPU. These provide microcode updates to your CPU.
 
@@ -258,7 +258,7 @@ Let's make sure networking will be up and running once we finish our install:
 # systemctl enable wpa_supplicant.service
 ```
 
-We also need to setup the DHCP client if your using Wi-Fi, which we'll do with `iwd`. Create a new file at `/etc/iwd/main.conf`, and add the following to the file:
+We also need to setup the DHCP client if you're using Wi-Fi, which we'll do with `iwd`. Create a new file at `/etc/iwd/main.conf`, and add the following to the file:
 
 ```
 [General]
@@ -319,7 +319,7 @@ Our system is now finally configured, but it won't boot without a bootloader! We
 # bootctl install
 ```
 
-But we're not done yet. We still need to configure our boot partition. Copy the follow text into `/boot/loader/loader.conf` (make sure you only use spaces, tabs won't work!):
+But we're not done yet. We still need to configure our boot partition. Copy the following text into `/boot/loader/loader.conf` (make sure you only use spaces, tabs won't work!):
 
 ```
 default      arch.conf
@@ -328,7 +328,7 @@ console-mode keep
 editor       no
 ```
 
-This is the config file for systemd-boot. Now we need to define the boot entries. First, we want to set a label for our encrypted partition, let's call it `arch_os`:
+This is the config file for systemd-boot. Now we need to define the boot entries. First, we want to set a label for our encrypted partition. Let's call it `arch_os`:
 
 ```
 cryptsetup config --label="arch_os" /dev/sda2
@@ -378,7 +378,7 @@ Now I'm not sure about you, but interacting with the raw CLI gets old rather qui
 # pacman -S plasma-meta kde-applications xorg-server
 ```
 
-We'll also need to install the graphics drivers. If you use Intel or AMD graphics, use the `mesa` package. If you have use Nvidia, you'll need to install `nvidia` and/or `nvidia-lts` depending on what linux version you installed.
+We'll also need to install the graphics drivers. If you use Intel or AMD graphics, use the `mesa` package. If you use Nvidia, you'll need to install `nvidia` and/or `nvidia-lts` depending on what linux version you installed.
 If you're using a VM, install `virtualbox-guest-utils` and enable `vboxservice.service`.
 We also need to enable our display manager (the lock screen):
 
@@ -404,7 +404,7 @@ $ sudo -s
 
 ### Generating a swapfile
 
-A swapfile is where the operating system can place some the unused RAM contents if the RAM ever becomes full. First, we need to generate a file to become a swapfile, let's say 2GB:
+A swapfile is where the operating system can place some of its stale memory if the RAM ever becomes full. First, we need to generate a file to become a swapfile, let's say 2GB:
 
 ```
 # dd if=/dev/zero of=/swapfile bs=1M count=2k status=progress
@@ -447,7 +447,7 @@ You'll need to install the following packages:
 
 #### Enable Setup Mode
 
-You'll first need the enter the UEFI and change Secure Boot to "Setup Mode". As each manufacturer has a different layout, you'll have to figure this out on your own, but it will most likely be under "Security" banner.
+You'll first need to enter the UEFI and change Secure Boot to "Setup Mode". As each manufacturer has a different layout, you'll have to figure this out on your own, but it will most likely be under the "Security" banner.
 
 #### Setting up shim
 
@@ -521,4 +521,4 @@ $ sbctl status
 
 ## Wrapping up
 
-Hopefully this guide has assisted you in running Arch Linux for the first time, although this set up is a bit more complicated than it needs to be. I'd also highly recommend exploring other packages, desktop environment's, etc. to make your system yours. I'd also recommend looking at the [Arch Wiki's General Recommendations](https://wiki.archlinux.org/title/General_recommendations) for anything I didn't cover. Best of luck!
+Hopefully this guide has assisted you in running Arch Linux for the first time, although this set up is a bit more complicated than it needs to be. I'd also highly recommend exploring other packages, desktop environments, etc. to make your system yours. I'd also recommend looking at the [Arch Wiki's General Recommendations](https://wiki.archlinux.org/title/General_recommendations) for anything I didn't cover. Best of luck!

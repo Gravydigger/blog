@@ -13,19 +13,19 @@ About 2 years ago, I wanted to make a personal website to use my apex domain `gr
 
 This resulted in me hating front end work due to having to work with raw HTML & CSS, so I wanted to use a framework this time. Now I'd probably should have used a framework like React, but I mainly wanted something that I thought was simple & easy to learn. I also wanted to make this new website a static one-paged website. After exploring my options, I found a framework called [Astro](https://astro.build/), which was in version 2.0 at the time. I liked the modularity of components, and made my very first website publicly available, hosted on GitHub. You can find the [repo here](https://github.com/Gravydigger/One-Paged-Website) for prosperity's sake, as well as what the website looked like on the [WayBack Machine](https://web.archive.org/web/20231214162654/https://gravydigger.net/).
 
-Now while I was very happy with the result of my website, there were a few issues with it that was caused due to my inexperience. The main one was that the website had a poor mobile viewing experience. Another issue was the dependence on JavaScript. I'm a bit of a privacy nut, so I automatically have my browser disable rendering of any JavaScript on my browser. Sadly, to change to different sections of the website for viewing, you needed JavaScript enabled. While this isn't a bit deal for the average person, I'd rather have a website be completely usable without it.
+Now while I was very happy with the result of my website, there were a few issues with it that were caused due to my inexperience. The main one was that the website had a poor mobile viewing experience. Another issue was the dependence on JavaScript. I'm a bit of a privacy nut, so I automatically have my browser disable rendering of any JavaScript on my browser. Sadly, to change to different sections of the website for viewing, you needed JavaScript enabled. While this isn't a big deal for the average person, I'd rather have a website be completely usable without it.
 
 ### So why make a blog?
 
-[One of my friends](https://cubie87.github.io/) recently decided to make a blog to document their findings and to also keep a public record for what they have done, both for themselves and for others. I like the idea of publicly accessible archive of my thoughts, especially as I tend to have to refer to other websites and documentation to remind myself how to do certain things, like my post on [installing Arch Linux](/posts/arch-install). While it is true that anything on the internet stays there forever, time can make it really difficult to track down sources and information if they've been taken down, or if you can't remember where a vital piece of information is that you remember viewing but can't quite remember what it was.
+[One of my friends](https://cubie87.github.io/) recently decided to make a blog to document their findings and to also keep a public record of what they have done, both for themselves and for others. I like the idea of a publicly accessible archive of my thoughts, especially as I tend to have to refer to other websites and documentation to remind myself how to do certain things, like my post on [installing Arch Linux](/posts/arch-install). While it is true that anything on the internet stays there forever, time can make it really difficult to track down sources and information if they've been taken down, or if you can't remember where a vital piece of information is that you remember viewing but can't quite remember what it was.
 
 ## The actual blog making
 
-Now with the preamble out of the way let's get to the meat of this post.
+Now with the preamble out of the way, let's get to the meat of this post.
 
 ### Picking a template
 
-Now I knew I was gonna make my website in Astro as that was what I was most familiar with, but my lack of experience with web dev made me want to piggyback on someone else's work that knows what they are doing instead to make an actually decent website. I also wanted to try out [Tailwind](https://tailwindcss.com/) since I've heard it makes CSS easier to use and manage.
+Now I knew I was gonna make my website in Astro as that was what I was most familiar with, but my lack of experience with web dev made me want to piggyback on the work of someone else that knows what they are doing instead to make an actually decent website. I also wanted to try out [Tailwind](https://tailwindcss.com/) since I've heard it makes CSS easier to use and manage.
 
 After having a look at the options, these where my top 3 choices:
 
@@ -33,11 +33,11 @@ After having a look at the options, these where my top 3 choices:
 - [Astro Cactus](https://github.com/chrismwilliams/astro-theme-cactus)
 - [Nimbus Narratives](https://github.com/abdllahdev/nimbus-narratives)
 
-Ultimately, I decided to go with Astro Cactus as it had a very minimalistic appearance but had quite a few nice features without being overly complex.
+Ultimately, I decided to go with Astro Cactus, as it had a very minimalistic appearance but had quite a few nice features without being overly complex.
 
 ### Breaking into the repo
 
-With the templated installed in my own GitHub repo, it was time to make some changes to make the website mine.
+With the template installed in my own GitHub repo, it was time to make some changes to make the website mine.
 
 #### Configuration
 
@@ -66,7 +66,7 @@ Now I'm pretty happy with the final result, but whenever I look at it, it always
 
 Have you noticed that when you share a link on social media it usually embeds the link, giving some more information on what the page is about? This is done via the [Open Graph Protocol](https://ogp.me/), which simply has you add `<meta>` tags to your web page. [Satori](https://github.com/vercel/satori) allows you to convert HTML & CSS into an SVG, allowing for dynamically created embed images for each of my posts. Pretty cool right?
 ![The Open Graph Image for this very blog!](/og-image/create-blog.png)
-What wasn't cool was the hours taken trying to figure out why my logo wasn't working with the image generation, despite working within the website itself. Turns out the SVG output of the images provided by Inkscape and the input of Satori _isn't_ compatible. Let's take an example for one of the paths in the Inkscape logo SVG (note that the `d` attribute has been omitted for clarify):
+What wasn't cool was the hours taken trying to figure out why my logo wasn't working with the image generation, despite working within the website itself. Turns out the SVG output of the images provided by Inkscape and the input of Satori _isn't_ compatible. Let's take an example for one of the paths in the Inkscape logo SVG (note that the `d` attribute has been omitted for clarity):
 
 ```xml
 <path style="display:inline;fill:#2d2537;stroke-width:1.22169;stroke-miterlimit:1" d="..." /><path>
@@ -107,7 +107,7 @@ Now let's make it suitable for our RSS icon. As this is an internal link, we can
 - set the icon to show the standard RSS icon, and
 - change the `span` content to inform screen readers.
 
-With those modification, we get this:
+With those modifications, we get this:
 
 ```astro
 <a class="inline-block p-1 sm:hover:text-link" href="/rss.xml" target="_blank">
@@ -152,7 +152,7 @@ export default defineConfig({
 
 ### Rehyping
 
-Rehyping had two options, `rehype-katex` & `rehype-mathjax`. Now my first attempt was with MathJax, as that was what I was familiar with. However, the styling of the maths left much to be desired, and you couldn't copy the equations, which lead me looking at KaTeX. Again, this was installed as a node module and defined in `astro.config.ts`:
+Rehyping had two options, `rehype-katex` & `rehype-mathjax`. Now my first attempt was with MathJax, as that was what I was familiar with. However, the styling of the maths left much to be desired, and you couldn't copy the equations, which lead to me looking at KaTeX. Again, this was installed as a node module and defined in `astro.config.ts`:
 
 ```ts
 export default defineConfig({
