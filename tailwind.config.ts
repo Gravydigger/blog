@@ -22,6 +22,7 @@ export default {
 			colors: {
 				bgColor: "hsl(var(--theme-bg) / <alpha-value>)",
 				textColor: "hsl(var(--theme-text) / <alpha-value>)",
+				boldColor: "hsl(var(--theme-bold) / <alpha-value>)",
 				link: "hsl(var(--theme-link) / <alpha-value>)",
 				accent: "hsl(var(--theme-accent) / <alpha-value>)",
 				"accent-2": "hsl(var(--theme-accent-2) / <alpha-value>)",
@@ -44,7 +45,7 @@ export default {
 						"--tw-prose-body": theme("colors.textColor / 1"),
 						"--tw-prose-headings": theme("colors.accent-2 / 1"),
 						"--tw-prose-links": theme("colors.textColor / 1"),
-						"--tw-prose-bold": theme("colors.textColor / 1"),
+						"--tw-prose-bold": theme("colors.boldColor / 1"),
 						"--tw-prose-bullets": theme("colors.textColor / 1"),
 						"--tw-prose-quotes": theme("colors.quote / 1"),
 						"--tw-prose-code": theme("colors.textColor / 1"),
@@ -58,7 +59,7 @@ export default {
 							"@apply cactus-link no-underline": "",
 						},
 						strong: {
-							fontWeight: "700",
+							fontWeight: "800",
 						},
 						code: {
 							border: "1px dotted #666",
