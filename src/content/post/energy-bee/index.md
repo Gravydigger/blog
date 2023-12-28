@@ -1,6 +1,6 @@
 ---
-title: "2 Billion RF/t with a single bee"
-description: "An explanation of how a single bee in FTB Revelation can produce 2 Billion RF/t."
+title: "2 Billion RF/t with a Single Bee"
+description: "An explanation of how a single bee in the Minecraft modpack FTB Revelation can produce 2 Billion RF/t."
 publishDate: "28 Dec 2023"
 coverImage:
   src: "./energy.png"
