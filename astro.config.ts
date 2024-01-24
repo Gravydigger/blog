@@ -1,5 +1,6 @@
 import { defineConfig } from "astro/config";
 import fs from "fs";
+import icon from "astro-icon";
 import mdx from "@astrojs/mdx";
 import tailwind from "@astrojs/tailwind";
 import sitemap from "@astrojs/sitemap";
@@ -35,6 +36,7 @@ export default defineConfig({
 			applyBaseStyles: false,
 		}),
 		sitemap(),
+		icon(),
 	],
 	image: {
 		domains: ["webmention.io"],
