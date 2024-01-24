@@ -2,7 +2,7 @@
   <img alt="Astro Cactus logo" src="https://raw.githubusercontent.com/Gravydigger/blog/main/public/icon.svg" width="128" />
 </div>
 <h1 align="center">
-  Gravy's Domain
+  Rhys' Domain
 </h1>
 
 A personal website used to contain the ~~mad ravings~~ documentation of projects and ideas.

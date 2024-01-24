@@ -2,9 +2,9 @@ import type { SiteConfig } from "@/types";
 
 export const siteConfig: SiteConfig = {
 	// Used as both a meta property (src/components/BaseHead.astro L:31 + L:49) & the generated satori png (src/pages/og-image/[slug].png.ts)
-	author: "Gravydigger",
+	author: "Rhys Malson",
 	// Meta property used to construct the meta title property, found in src/components/BaseHead.astro L:11
-	title: "Gravy's Domain",
+	title: "Rhys' Domain",
 	// Meta property used as the default description meta property
 	description: "A blog filled about IT, homelabbing, and other bits 'n bobs.",
 	// HTML lang property, found in src/layouts/Base.astro L:18

@@ -2,7 +2,7 @@
 title: "Installing Arch Linux, a Guided Walkthrough"
 description: "A guide to installing Arch Linux in a way that's a bit more guided, and can be used as a reference point for your own installation."
 publishDate: "25 Dec 2023"
-tags: ["tech", "arch", "it"]
+tags: ["tech", "linux", "software"]
 ---
 
 _NOTICE: Always cross-reference the [Arch Linux Wiki](https://wiki.archlinux.org/) for the most up-to-date information._

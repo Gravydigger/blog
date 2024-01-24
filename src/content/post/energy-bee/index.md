@@ -5,10 +5,10 @@ publishDate: "28 Dec 2023"
 coverImage:
   src: "./energy.png"
   alt: "A Minecraft UI showing the charge rate of a Draconic Energy Core being 2.024G RF/t"
-tags: ["game", "minecraft"]
+tags: ["game", "math"]
 ---
 
-Ever heard of the Minecraft modpack FTB Revelations? Personally, it's one of my favourite modpacks in which I've spent at least several hundred hours on. During that time, I experimented and found a way to get a ludicrous amount of $RF/t$. Now, I decided to delve deep into the source code of the mods that make it possible to show you how it all works, as well as showing you how to build this contraption, all derived from a single queen bee from the career bees mod.
+Ever heard of the Minecraft modpack FTB Revelations? Personally, it's one of my favourite modpacks in which I've spent at least several hundred hours on. During that time, I experimented and found a way to get a ludicrous amount of $$RF/t$$. Now, I decided to delve deep into the source code of the mods that make it possible to show you how it all works, as well as showing you how to build this contraption, all derived from a single queen bee from the career bees mod.
 
 ## Why Should I Bother?
 

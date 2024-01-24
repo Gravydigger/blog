@@ -7,7 +7,7 @@ ogImage: "/social-card.png"
 coverImage:
   src: "./cover.png"
   alt: "Astro build wallpaper"
-tags: ["test", "markdown", "image"]
+tags: []
 draft: true
 ---
 
