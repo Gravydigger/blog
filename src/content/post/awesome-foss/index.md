@@ -1,5 +1,5 @@
 ---
-title: "Awesome & Free Open Source Software Apps"
+title: "Awesome and Free Open Source Software Apps"
 description: "Some free applications I personally use on a day to day basis."
 publishDate: "24 Jan 2024"
 tags: ["tech", "software", "linux", "windows", "android"]
