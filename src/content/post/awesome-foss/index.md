@@ -81,7 +81,7 @@ An open source f2a app. It allows you to encrypt access to your f2a, requiring e
 
 ## K-9 Mail
 
-In 2022, K-9 Mail joined the Thunderbird family, so this will eventually be renamed to Thunderbird on Android at some point.
+In 2022, _K-9_ Mail joined the Thunderbird family, so this will eventually be renamed to Thunderbird on Android at some point.
 
 It's an email client for your phone, allowing you to connect multiple emails from different providers so they are now all under one app; a wonderful complimentary addition to [Mozilla Thunderbird](https://www.thunderbird.net/) itself.
 
