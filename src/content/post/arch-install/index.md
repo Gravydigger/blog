@@ -38,33 +38,33 @@ We'll be using [iwctl](https://wiki.archlinux.org/title/Iwd#iwctl) to help us co
 
 First, we'll need to make sure its daemon is running, then start the interactive prompt:
 
-```
+```console
 # systemctl start iwd
 # iwctl
 ```
 
 From here, we'll need to see what adaptors are available:
 
-```
+```console
 [iwd]# device list
 ```
 
 Pick an adaptor, then run the following commands:
 
-```
+```console
 [iwd]# station <device> scan
 [iwd]# station <device> get-networks
 ```
 
 This will print out a list of available Wi-Fi networks. Once you connect to your Wi-Fi network, you'll be prompted to supply a password if needed.
 
-```
+```console
 [iwd]# station <device> connect <SSID>
 ```
 
 Once you're connected, exit out of the prompt and verify you have internet access:
 
-```
+```console
 [iwd]# exit
 # ping -c 5 archlinux.org
 ```
@@ -76,7 +76,7 @@ If everything is working, we can move on.
 I hope you backed up your data on your drive, 'cause this step is gonna cause **data loss**.
 First, you'll need to see what device your storage drive is using [fdisk](https://wiki.archlinux.org/title/Fdisk):
 
-```
+```console
 # fdisk -l
 ```
 
@@ -85,7 +85,7 @@ You should see your disk assigned as something like `/dev/sda` or `/dev/nvme0n1`
 
 We'll then want to go into the interactive prompt:
 
-```
+```console
 # fdisk /dev/sda
 ```
 
@@ -101,7 +101,7 @@ Once you've done that, type `p` to get the proposed partition layout and see if 
 
 Once you're happy, type `w` to confirm the changes to disk, which you'll now be able to see in `fdisk -l`. We'll now need to format the `/boot` partition with FAT32, which is done with:
 
-```
+```console
 # mkfs.fat -F32 /dev/sda1
 ```
 
@@ -113,13 +113,13 @@ So, what is LVM? LVM stands for Logical Volume Manager, which allows our files t
 
 First, we'll need to encrypt the partition. Make sure you set a strong password (or even better, a passphrase) and make sure you don't forget it!
 
-```
+```console
 # cryptsetup luksFormat /dev/sda2
 ```
 
 We'll then need to access the encrypted partition:
 
-```
+```console
 # cryptsetup open /dev/sda2 cryptlvm
 ```
 
@@ -129,39 +129,39 @@ Now as you've opened the encrypted partition, it created a decrypted reference i
 
 Now for LVM. First, we'll need to create a physical volume:
 
-```
+```console
 # pvcreate /dev/mapper/cryptlvm
 ```
 
 Followed by a volume group (you can name the volume group to be anything, this guide will use `volgroup0`):
 
-```
+```console
 # vgcreate volgroup0 /dev/mapper/cryptlvm
 ```
 
 We'll now create 2 logical volumes, one for root `/`, and the other for the home folder `/home`. For our root folder, 32GB will be more than enough, and the home folder will take up the rest of the space.
 
-```
+```console
 # lvcreate -L 32G volgroup0 -n lv_root
 # lvcreate -l 100%FREE volgroup0 -n lv_home
 ```
 
 Now as we'll be formatting these volumes with ext4, we'll leave 256MB free in `volgroup0` to allow for automated error checking and trimming.
 
-```
+```console
 # lvreduce -L -256M volgroup0/lv_home
 ```
 
 Now we'll format the volumes with ext4:
 
-```
+```console
 # mkfs.ext4 /dev/volgroup0/lv_root
 # mkfs.ext4 /dev/volgroup0/lv_home
 ```
 
 And mount the file systems:
 
-```
+```console
 # mount /dev/volgroup0/lv_root /mnt
 # mount --mkdir /dev/volgroup0/lv_home /mnt/home
 # mount --mkdir /dev/sda1 /mnt/boot
@@ -169,7 +169,7 @@ And mount the file systems:
 
 Finally, we'll create a `fstab` file to allow our operating system to know what devices it needs to mount at boot. Once you generate the `fstab` file, print it out with `cat` and see if everything looks good.
 
-```
+```console
 # genfstab -U /mnt >> /mnt/etc/fstab
 # cat /mnt/etc/fstab
 ```
@@ -187,13 +187,13 @@ Now we've set up everything, now we can actually start to install Arch Linux ont
 
 We'll need to install the base package, as well as Linux itself, of course! Now, as for packages, I'd recommend installing both `linux` and `linux-lts` plus their headers, just in case something breaks in the kernel and you need to head to a known LTS version. However, I've personally never needed to use the `linux-lts`. If you're following along in a VM, you can omit installing `linux-firmware`.
 
-```
+```console
 # pacstrap -K /mnt base linux linux-headers linux-lts linux-lts-headers linux-firmware
 ```
 
 We'll now chroot into our working installation to continue downloading more packages:
 
-```
+```console
 # arch-chroot /mnt
 ```
 
@@ -201,7 +201,7 @@ We'll now chroot into our working installation to continue downloading more pack
 
 There are some additional packages we'll need to install:
 
-```
+```console
 # pacman -S lvm2 networkmanager
 ```
 
@@ -223,13 +223,13 @@ Time to configure!
 
 We'll also want to configure the appropriate time zone for your location. You can view your region and city in `/usr/share/zoneinfo/`. For example, if you lived in Sydney Australia, you'd write the following command:
 
-```
+```console
 # ln -sf /usr/share/zoneinfo/Australia/Sydney /etc/localtime
 ```
 
 Then configure the hardware clock:
 
-```
+```console
 # hwclock --systohc
 ```
 
@@ -237,14 +237,14 @@ Then configure the hardware clock:
 
 Edit the `locale.gen` file and uncomment the appropriate UTF-8 locals. In my case it would be `en_US.UTF-8 UTF-8`. Once you've picked your locale files, generate them:
 
-```
+```console
 # nano /etc/locale.gen
 # locale-gen
 ```
 
 Then create a `locale.conf` file with the LANG variable.
 
-```
+```console
 echo "LANG=en_AU.UTF-8" | tee /etc/locale.conf
 ```
 
@@ -252,7 +252,7 @@ echo "LANG=en_AU.UTF-8" | tee /etc/locale.conf
 
 Let's make sure networking will be up and running once we finish our install:
 
-```
+```console
 # systemctl enable NetworkManager.service
 # systemctl enable systemd-resolved.service
 # systemctl enable wpa_supplicant.service
@@ -260,14 +260,14 @@ Let's make sure networking will be up and running once we finish our install:
 
 We also need to setup the DHCP client if you're using Wi-Fi, which we'll do with `iwd`. Create a new file at `/etc/iwd/main.conf`, and add the following to the file:
 
-```
+```bash title="/etc/iwd/main.conf"
 [General]
 EnableNetworkConfiguration=true
 ```
 
 And finally, we need to set our hostname. Imma pick `GravyArch`:
 
-```
+```console
 # echo "GravyArch" | tee /etc/hostname
 ```
 
@@ -279,7 +279,7 @@ As we have both LVM & encryption, we'll need to modify the initramfs. When editi
 
 Then we need to regenerate all of the initramfs:
 
-```
+```console
 # mkinitcpio -P
 ```
 
@@ -287,25 +287,25 @@ Then we need to regenerate all of the initramfs:
 
 We'll want to set a root password (we'll disable root login after our installation later for security).
 
-```
+```console
 # passwd
 ```
 
 As it's generally unwise to do everything in root once our system is installed, let's add a user. I'll use the username `gravy` and add the user to the group `wheel`.
 
-```
+```console
 # useradd -mg users -G wheel gravy
 ```
 
 Then give the user a password.
 
-```
+```console
 # passwd gravy
 ```
 
 Then to give our user root privileges via `sudo`, we'll need to configure `sudo` and uncomment the line `%wheel ALL=(ALL) ALL`:
 
-```
+```console
 # EDITOR=nano visudo
 ```
 
@@ -315,13 +315,13 @@ And now our user will have sudo privileges!
 
 Our system is now finally configured, but it won't boot without a bootloader! We'll be using systemd-boot as mentioned before, which has already been pre-installed onto our system. To install systemd-boot, we run the following command:
 
-```
+```console
 # bootctl install
 ```
 
 But we're not done yet. We still need to configure our boot partition. Copy the following text into `/boot/loader/loader.conf` (make sure you only use spaces, tabs won't work!):
 
-```
+```bash title="/boot/loader/loader.conf"
 default      arch.conf
 timeout      5
 console-mode keep
@@ -330,13 +330,13 @@ editor       no
 
 This is the config file for systemd-boot. Now we need to define the boot entries. First, we want to set a label for our encrypted partition. Let's call it `arch_os`:
 
-```
-cryptsetup config --label="arch_os" /dev/sda2
+```console
+# cryptsetup config --label="arch_os" /dev/sda2
 ```
 
 Now copy the following text into `/boot/loader/entries/arch.conf` (assuming you installed the `amd-ucode` and `linux` package, change the text as needed to support your system):
 
-```
+```bash title="/boot/loader/entries/arch.conf"
 title   Arch Linux
 linux   /vmlinuz-linux
 initrd  /amd-ucode.img
@@ -346,10 +346,10 @@ options cryptdevice=LABEL=arch_os:volgroup0:allow-discards root=/dev/volgroup0/l
 
 And do the same for the fallback initramfs:
 
-```
+```bash title="/boot/loader/entries/arch-fallback.conf" {1,4}
 title   Arch Linux (Fallback)
 linux   /vmlinuz-linux
-initrd  /intel-ucode.img
+initrd  /amd-ucode.img
 initrd  /initramfs-linux-fallback.img
 options cryptdevice=LABEL=arch_os:volgroup0:allow-discards root=/dev/volgroup0/lv_root rw
 ```
@@ -360,8 +360,8 @@ If you installed another version of linux (like `linux-lts`), repeat for each ne
 
 Exit the chroot with `exit`, and type:
 
-```
-umount -R /mnt
+```console
+# umount -R /mnt
 ```
 
 This will unmount the partitions. Remove the installation media & type `reboot`. If all goes well, you should boot into Arch Linux!
@@ -374,7 +374,7 @@ If you've booted up into your Arch install, unlock your disk encryption & login 
 
 Now I'm not sure about you, but interacting with the raw CLI gets old rather quickly. Let's get a Desktop Environment set up! Now I'd recommend having a look at the [many options to choose from](https://wiki.archlinux.org/title/Desktop_environment), including window managers, though I'll be picking KDE-Plasma. I'll also be installing its full set of applications along with it as well as the Xorg display server.
 
-```
+```console
 # pacman -S plasma-meta kde-applications xorg-server
 ```
 
@@ -382,7 +382,7 @@ We'll also need to install the graphics drivers. If you use Intel or AMD graphic
 If you're using a VM, install `virtualbox-guest-utils` and enable `vboxservice.service`.
 We also need to enable our display manager (the lock screen):
 
-```
+```console
 # systemctl enable sddm
 ```
 
@@ -392,13 +392,13 @@ Once that is all done, reboot.
 
 You'll want to login as a non-root privileged user for this one. Simply type the following commands to disable root login:
 
-```
+```console
 $ sudo passwd -l root
 ```
 
 if you want to become root, simply type:
 
-```
+```console
 $ sudo -s
 ```
 
@@ -406,32 +406,32 @@ $ sudo -s
 
 A swapfile is where the operating system can place some of its stale memory if the RAM ever becomes full. First, we need to generate a file to become a swapfile, let's say 2GB:
 
-```
+```console
 # dd if=/dev/zero of=/swapfile bs=1M count=2k status=progress
 ```
 
 We'll then need to set it to read and write by root only.
 
-```
+```console
 # chmod 600 /swapfile
 ```
 
 Then we need to format the file to be a swapfile:
 
-```
+```console
 # mkswap -U clear /swapfile
 ```
 
 We now need the system to mount the swapfile as swap in out fstab configuration. First make a backup, then write the following command:
 
-```
+```console
 # cp /etc/fstab /etc/fstab.bak
 # echo "/swapfile none swap defaults 0 0" | tee -a /etc/fstab
 ```
 
 Check your fstab configuration to make sure that the swapfile entry isn't the only entry. Your swapfile will then be used once you restart your computer, or if you want to activate it now:
 
-```
+```console
 # swapon /swapfile
 ```
 
@@ -453,20 +453,20 @@ You'll first need to enter the UEFI and change Secure Boot to "Setup Mode". As e
 
 Once you've installed `shim-signed` from the AUR, run the following command to rename your current bootloader:
 
-```
+```console
 # mv /boot/EFI/BOOT/BOOTx64.EFI /boot/EFI/BOOT/grubx64.efi
 ```
 
 You'll then want to copy the shim files over, renaming them in the process:
 
-```
+```console
 # cp /usr/share/shim-signed/shimx64.efi /boot/EFI/BOOT/BOOTx64.EFI
 # cp /usr/share/shim-signed/mmx64.efi /boot/EFI/BOOT/
 ```
 
 Then add a new entry into the boot order using `efibootmgr`:
 
-```
+```console
 # efibootmgr --unicode --disk /dev/sda --part 1 --create --label "Shim" --loader /EFI/BOOT/BOOTx64.EFI
 ```
 
@@ -476,46 +476,46 @@ What this does is that when shim is executed, it will try and launch a file call
 
 Now we'll use `sbctl` to assist us. [More info can be found here](https://wiki.archlinux.org/title/Unified_Extensible_Firmware_Interface/Secure_Boot#Assisted_process_with_sbctl). First check to see if secure boot is in setup mode:
 
-```
+```console
 $ sbctl status
 ```
 
 You should see that `sbctl` is not installed and secure boot is disabled.
 We'll then want to create new keys, and enroll them with Microsoft's keys:
 
-```
+```console
 # sbctl create-keys
 # sbctl enroll-keys -m
 ```
 
 Then re-check the status:
 
-```
+```console
 $ sbctl status
 ```
 
 `sbctl` should now be installed, but now we'll need to sign our files. Let's verify what files need to be signed:
 
-```
+```console
 # sbctl verify
 ```
 
 Sign all files listed but note that you may need to manually sign additional files, usually the kernel & bootloader files.
 
-```
+```console
 # sbctl sign -s /boot/vmlinuz-linux
 # sbctl sign -s /boot/EFI/BOOT/BOOTX64.EFI
 ```
 
 As we are using systemd-boot, we also need to sign an additional file to ensure that all of the files are signed when the bootloader is updated:
 
-```
+```console
 # sbctl sign -s -o /usr/lib/systemd/boot/efi/systemd-bootx64.efi.signed /usr/lib/systemd/boot/efi/systemd-bootx64.efi
 ```
 
 Once everything is signed, reboot your system and enable secure boot in the UEFI. If everything loads, secure boot should be working, which you can verify with:
 
-```
+```console
 $ sbctl status
 ```
 
