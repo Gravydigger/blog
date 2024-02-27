@@ -55,6 +55,11 @@ const cactusTech: Array<{ title: string; desc: string; href: string }> = [
 		desc: "An easy to use Icon component for Astro.",
 		href: "https://github.com/natemoo-re/astro-icon#readme",
 	},
+	{
+		desc: "Highly customisable source code & syntax highlighter",
+		href: "https://expressive-code.com/",
+		title: "Expressive Code",
+	},
 ];
 ---
 
@@ -92,22 +97,22 @@ const cactusTech: Array<{ title: string; desc: string; href: string }> = [
 	</section>
 	<section class="mt-16">
 		<h2 class="title mb-4 text-xl">Technologies</h2>
-		<ul class="space-y-4 sm:space-y-2">
+		<dl class="space-y-4">
 			{
-				cactusTech.map(({ href, title, desc }) => (
-					<li>
-						<a
-							href={href}
-							target="_blank"
-							rel="noopener noreferrer"
-							class="cactus-link inline-block"
-						>
-							{title}
-						</a>
-						:<p class="inline-block sm:mt-2">{desc}</p>
-					</li>
+				cactusTech.map(({ desc, href, title }) => (
+					<div class="flex flex-col gap-2 md:flex-row">
+						<dt>
+							<span class="flex">
+								<a class="cactus-link" href={href} rel="noopener noreferrer" target="_blank">
+									{title}
+								</a>
+								:
+							</span>
+						</dt>
+						<dd>{desc}</dd>
+					</div>
 				))
 			}
-		</ul>
+		</dl>
 	</section>
 </PageLayout>

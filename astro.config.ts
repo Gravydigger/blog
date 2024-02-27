@@ -6,8 +6,10 @@ import tailwind from "@astrojs/tailwind";
 import sitemap from "@astrojs/sitemap";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
+import expressiveCode from "astro-expressive-code";
 import remarkUnwrapImages from "remark-unwrap-images";
 import rehypeExternalLinks from "rehype-external-links";
+import { expressiveCodeOptions } from "./src/site.config";
 import { remarkReadingTime } from "./src/utils/remark-reading-time";
 
 // https://astro.build/config
@@ -31,12 +33,14 @@ export default defineConfig({
 		},
 	},
 	integrations: [
-		mdx({}),
+		expressiveCode(expressiveCodeOptions),
+		icon(),
 		tailwind({
 			applyBaseStyles: false,
 		}),
 		sitemap(),
-		icon(),
+
+		mdx(),
 	],
 	image: {
 		domains: ["webmention.io"],
@@ -44,7 +48,7 @@ export default defineConfig({
 	// https://docs.astro.build/en/guides/prefetch/
 	prefetch: true,
 	vite: {
-		plugins: [rawFonts([".ttf"])],
+		plugins: [rawFonts([".ttf", ".woff"])],
 		optimizeDeps: {
 			exclude: ["@resvg/resvg-js"],
 		},

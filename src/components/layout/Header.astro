@@ -46,7 +46,7 @@ const url = new URL(Astro.request.url);
 					></path>
 				</g>
 			</svg>
-			<span class="text-xl font-bold sm:text-2xl">Rhys' Domain</span>
+			<span class="pl-3 text-xl font-bold sm:text-2xl">Rhys' Domain</span>
 		</a>
 		<nav
 			id="navigation-menu"
@@ -71,40 +71,40 @@ const url = new URL(Astro.request.url);
 	<ThemeToggle />
 	<mobile-button>
 		<button
-			id="toggle-navigation-menu"
-			class="group relative ms-4 h-7 w-7 sm:invisible sm:hidden"
-			type="button"
-			aria-label="Open main menu"
 			aria-expanded="false"
 			aria-haspopup="menu"
+			aria-label="Open main menu"
+			class="group relative ms-4 h-7 w-7 sm:invisible sm:hidden"
+			id="toggle-navigation-menu"
+			type="button"
 		>
 			<svg
-				id="line-svg"
-				class="absolute start-1/2 top-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 transition-all group-aria-expanded:scale-0 group-aria-expanded:opacity-0"
 				aria-hidden="true"
-				focusable="false"
-				xmlns="http://www.w3.org/2000/svg"
+				class="absolute start-1/2 top-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 transition-all group-aria-expanded:scale-0 group-aria-expanded:opacity-0"
 				fill="none"
-				viewBox="0 0 24 24"
-				stroke-width="1.5"
+				focusable="false"
+				id="line-svg"
 				stroke="currentColor"
+				stroke-width="1.5"
+				viewBox="0 0 24 24"
+				xmlns="http://www.w3.org/2000/svg"
 			>
-				<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5"
+				<path d="M3.75 9h16.5m-16.5 6.75h16.5" stroke-linecap="round" stroke-linejoin="round"
 				></path>
 			</svg>
 			<svg
-				id="cross-svg"
+				aria-hidden="true"
 				class="absolute start-1/2 top-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 scale-0 text-accent opacity-0 transition-all group-aria-expanded:scale-100 group-aria-expanded:opacity-100"
 				class="text-accent"
-				aria-hidden="true"
-				focusable="false"
-				xmlns="http://www.w3.org/2000/svg"
 				fill="none"
-				viewBox="0 0 24 24"
-				stroke-width="1.5"
+				focusable="false"
+				id="cross-svg"
 				stroke="currentColor"
+				stroke-width="1.5"
+				viewBox="0 0 24 24"
+				xmlns="http://www.w3.org/2000/svg"
 			>
-				<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+				<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path>
 			</svg>
 		</button>
 	</mobile-button>
@@ -115,8 +115,14 @@ const url = new URL(Astro.request.url);
 
 	class MobileNavBtn extends HTMLElement {
 		private headerEl: HTMLElement;
-		private mobileButtonEl: HTMLButtonElement;
 		private menuOpen: boolean;
+		private mobileButtonEl: HTMLButtonElement;
+
+		toggleMobileMenu = () => {
+			toggleClass(this.headerEl, "menu-open");
+			this.menuOpen = !this.menuOpen;
+			this.mobileButtonEl.setAttribute("aria-expanded", this.menuOpen.toString());
+		};
 
 		constructor() {
 			super();
@@ -126,12 +132,6 @@ const url = new URL(Astro.request.url);
 
 			this.mobileButtonEl.addEventListener("click", this.toggleMobileMenu);
 		}
-
-		toggleMobileMenu = () => {
-			toggleClass(this.headerEl, "menu-open");
-			this.menuOpen = !this.menuOpen;
-			this.mobileButtonEl.setAttribute("aria-expanded", this.menuOpen.toString());
-		};
 	}
 
 	customElements.define("mobile-button", MobileNavBtn);
