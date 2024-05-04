@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@astrojs/mdx':
-        specifier: 2.1.1
-        version: 2.1.1(astro@4.5.12(@types/node@20.12.8)(typescript@5.4.5))
+        specifier: 2.3.1
+        version: 2.3.1(astro@4.5.12(@types/node@20.12.8)(typescript@5.4.5))
       '@astrojs/rss':
         specifier: 4.0.5
         version: 4.0.5
@@ -185,15 +185,15 @@ packages:
       prettier-plugin-astro:
         optional: true
 
-  '@astrojs/markdown-remark@4.2.1':
-    resolution: {integrity: sha512-2RQBIwrq+2qPYtp99bH+eL5hfbK0BoxXla85lHsRpIX/IsGqFrPX6pXI2cbWPihBwGbKCdxS6uZNX2QerZWwpQ==}
-
   '@astrojs/markdown-remark@4.3.2':
     resolution: {integrity: sha512-4Oa4VaYiBd0MatB+rWIU/0A8pZH/sK3c2QkRYb+OO2lPl+qzevJtWaZY8hAQc4qurIOlRdn6B6ofDAGhWw+DSg==}
 
-  '@astrojs/mdx@2.1.1':
-    resolution: {integrity: sha512-AgGFdE7HOGmoFooGvMSatkA9FiSKwyVW7ImHot/bXJ6uAbFfu6iG2ht18Cf1pT22Hda/6iSCGWusFvBv0/EnKQ==}
-    engines: {node: '>=18.14.1'}
+  '@astrojs/markdown-remark@5.1.0':
+    resolution: {integrity: sha512-S6Z3K2hOB7MfjeDoHsotnP/q2UsnEDB8NlNAaCjMDsGBZfTUbWxyLW3CaphEWw08f6KLZi2ibK9yC3BaMhh2NQ==}
+
+  '@astrojs/mdx@2.3.1':
+    resolution: {integrity: sha512-BOQFKD2Pi9cRntNQJlpF2fh4xV8doNpmVy9NKI95r4jsitrY4X5aTOhAowi+fkQgP/zW1A4HwCyQ6Pdam6z8zQ==}
+    engines: {node: ^18.17.1 || ^20.3.0 || >=21.0.0}
     peerDependencies:
       astro: ^4.0.0
 
@@ -3530,12 +3530,6 @@ packages:
   shiki@1.4.0:
     resolution: {integrity: sha512-5WIn0OL8PWm7JhnTwRWXniy6eEDY234mRrERVlFa646V2ErQqwIFd2UML7e0Pq9eqSKLoMa3Ke+xbsF+DAuy+Q==}
 
-  shikiji-core@0.9.19:
-    resolution: {integrity: sha512-AFJu/vcNT21t0e6YrfadZ+9q86gvPum6iywRyt1OtIPjPFe25RQnYJyxHQPMLKCCWA992TPxmEmbNcOZCAJclw==}
-
-  shikiji@0.9.19:
-    resolution: {integrity: sha512-Kw2NHWktdcdypCj1GkKpXH4o6Vxz8B8TykPlPuLHOGSV8VkhoCLcFOH4k19K4LXAQYRQmxg+0X/eM+m2sLhAkg==}
-
   side-channel@1.0.6:
     resolution: {integrity: sha512-fDW/EZ6Q9RiO8eFG8Hj+7u/oW+XrPTIChwCOM2+th2A6OblDtYYIpve9m+KvI9Z4C9qSEXlaGR6bTEYHReuglA==}
     engines: {node: '>= 0.4'}
@@ -4191,25 +4185,6 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@astrojs/markdown-remark@4.2.1':
-    dependencies:
-      '@astrojs/prism': 3.1.0
-      github-slugger: 2.0.0
-      import-meta-resolve: 4.1.0
-      mdast-util-definitions: 6.0.0
-      rehype-raw: 7.0.0
-      rehype-stringify: 10.0.0
-      remark-gfm: 4.0.0
-      remark-parse: 11.0.0
-      remark-rehype: 11.1.0
-      remark-smartypants: 2.1.0
-      shikiji: 0.9.19
-      unified: 11.0.4
-      unist-util-visit: 5.0.0
-      vfile: 6.0.1
-    transitivePeerDependencies:
-      - supports-color
-
   '@astrojs/markdown-remark@4.3.2':
     dependencies:
       '@astrojs/prism': 3.1.0
@@ -4233,9 +4208,32 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/mdx@2.1.1(astro@4.5.12(@types/node@20.12.8)(typescript@5.4.5))':
+  '@astrojs/markdown-remark@5.1.0':
     dependencies:
-      '@astrojs/markdown-remark': 4.2.1
+      '@astrojs/prism': 3.1.0
+      github-slugger: 2.0.0
+      hast-util-from-html: 2.0.1
+      hast-util-to-text: 4.0.2
+      import-meta-resolve: 4.1.0
+      mdast-util-definitions: 6.0.0
+      rehype-raw: 7.0.0
+      rehype-stringify: 10.0.0
+      remark-gfm: 4.0.0
+      remark-parse: 11.0.0
+      remark-rehype: 11.1.0
+      remark-smartypants: 2.1.0
+      shiki: 1.4.0
+      unified: 11.0.4
+      unist-util-remove-position: 5.0.0
+      unist-util-visit: 5.0.0
+      unist-util-visit-parents: 6.0.1
+      vfile: 6.0.1
+    transitivePeerDependencies:
+      - supports-color
+
+  '@astrojs/mdx@2.3.1(astro@4.5.12(@types/node@20.12.8)(typescript@5.4.5))':
+    dependencies:
+      '@astrojs/markdown-remark': 5.1.0
       '@mdx-js/mdx': 3.0.1
       acorn: 8.11.3
       astro: 4.5.12(@types/node@20.12.8)(typescript@5.4.5)
@@ -8314,12 +8312,6 @@ snapshots:
   shiki@1.4.0:
     dependencies:
       '@shikijs/core': 1.4.0
-
-  shikiji-core@0.9.19: {}
-
-  shikiji@0.9.19:
-    dependencies:
-      shikiji-core: 0.9.19
 
   side-channel@1.0.6:
     dependencies:
