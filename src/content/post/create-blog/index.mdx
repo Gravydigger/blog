@@ -5,6 +5,8 @@ publishDate: "27 Dec 2023"
 tags: ["it", "ramblings"]
 ---
 
+import { Image } from "astro:assets";
+
 ## Preamble
 
 ### Prior experiences
@@ -65,8 +67,17 @@ Now I'm pretty happy with the final result, but whenever I look at it, it always
 #### Open Graph & Satori
 
 Have you noticed that when you share a link on social media it usually embeds the link, giving some more information on what the page is about? This is done via the [Open Graph Protocol](https://ogp.me/), which simply has you add `<meta>` tags to your web page. [Satori](https://github.com/vercel/satori) allows you to convert HTML & CSS into an SVG, allowing for dynamically created embed images for each of my posts. Pretty cool right?
-![The Open Graph Image for this very blog!](/og-image/create-blog.png)
-What wasn't cool was the hours taken trying to figure out why my logo wasn't working with the image generation, despite working within the website itself. Turns out the SVG output of the images provided by Inkscape and the input of Satori _isn't_ compatible. Let's take an example for one of the paths in the Inkscape logo SVG (note that the `d` attribute has been omitted for clarity):
+
+<Image
+	src="/og-image/create-blog.png"
+	alt="The Open Graph embed for this very blog!"
+	width="750"
+	height="150"
+/>
+What wasn't cool was the hours taken trying to figure out why my logo wasn't working with the image
+generation, despite working within the website itself. Turns out the SVG output of the images
+provided by Inkscape and the input of Satori _isn't_ compatible. Let's take an example for one of
+the paths in the Inkscape logo SVG (note that the `d` attribute has been omitted for clarity):
 
 ```xml
 <path style="display:inline;fill:#2d2537;stroke-width:1.22169;stroke-miterlimit:1" d="..." /><path>

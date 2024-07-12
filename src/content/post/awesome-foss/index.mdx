@@ -5,6 +5,8 @@ publishDate: "24 Jan 2024"
 tags: ["tech", "software", "linux", "windows", "android"]
 ---
 
+import { Image } from "astro:assets";
+
 Sometimes it's really hard to find software gems on the internet, especially since FOSS software is only really known about when looking for something specific, or via word of mouth. However, being at university for 4 years has allowed me to find some of these gems over the years, and hopefully expose you to some of the lesser-known software that everyone can benefit from.
 
 I should mention that my current setup involves Windows, Linux, and Android, so cross-compatibility between them has been considered. As I don't own any apple products, you'll have to check if they are supported on MacOS or iOS (most will probably not).
@@ -51,7 +53,12 @@ As the database file is encrypted, you can use any service like Google Drive or 
 Now I know for some folks, making a secure but rememberable password is something struggle with, so here is a quick how-to for those interested.
 
 In summary, we'll be using a passphrase which this xkcd comic explains quite well:
-![xkcd comic 936, Password Strength](https://imgs.xkcd.com/comics/password_strength.png)
+
+<Image
+	src="https://imgs.xkcd.com/comics/password_strength.png"
+	alt="xkcd comic 936, Password Strength"
+	inferSize
+/>
 
 All you need is a 6-sided die (ideally 5 to make passphrase generation to go faster), and a piece of paper with a pen. Roll the die and jot down the number until you have 5 numbers in a row (like `53143`). Then take your number, find the corresponding word from the number from a [word list](https://www.eff.org/document/passphrase-wordlists) (in this case `savage`), and repeat. I'd recommend repeating until you have 5 or more words (more is better). Make sure you separate each word with a space, underscore, hyphen, etc. to preserve entropy, and you have a passphrase.
 

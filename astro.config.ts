@@ -43,7 +43,7 @@ export default defineConfig({
 		mdx(),
 	],
 	image: {
-		domains: ["webmention.io"],
+		domains: ["webmention.io", "imgs.xkcd.com"],
 	},
 	// https://docs.astro.build/en/guides/prefetch/
 	prefetch: true,
