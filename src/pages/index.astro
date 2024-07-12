@@ -1,9 +1,10 @@
 ---
+import SocialList from "@/components/SocialList.astro";
+import PostPreview from "@/components/blog/PostPreview.astro";
+import { getAllPosts, sortMDByDate } from "@/data/post";
+import PageLayout from "@/layouts/Base.astro";
+
 import { Icon } from "astro-icon/components";
-import PageLayout from "@/layouts/Base";
-import PostPreview from "@/components/blog/PostPreview";
-import SocialList from "@/components/SocialList";
-import { getAllPosts, sortMDByDate } from "@/utils";
 
 const MAX_POSTS = 10;
 const allPosts = await getAllPosts();

@@ -1,36 +1,23 @@
-import { defineConfig } from "astro/config";
-import fs from "fs";
-import icon from "astro-icon";
 import mdx from "@astrojs/mdx";
-import tailwind from "@astrojs/tailwind";
 import sitemap from "@astrojs/sitemap";
-import remarkMath from "remark-math";
-import rehypeKatex from "rehype-katex";
+import tailwind from "@astrojs/tailwind";
+import { defineConfig } from "astro/config";
 import expressiveCode from "astro-expressive-code";
-import remarkUnwrapImages from "remark-unwrap-images";
+import icon from "astro-icon";
+import fs from "fs";
 import rehypeExternalLinks from "rehype-external-links";
+import remarkUnwrapImages from "remark-unwrap-images";
+
+import rehypeKatex from "rehype-katex";
+import remarkMath from "remark-math";
+
 import { expressiveCodeOptions } from "./src/site.config";
 import { remarkReadingTime } from "./src/utils/remark-reading-time";
 
 // https://astro.build/config
 export default defineConfig({
-	// ! Please remember to replace the following site property with your own domain
-	site: "https://gravydigger.net/",
-	markdown: {
-		remarkPlugins: [
-			remarkUnwrapImages,
-			remarkReadingTime,
-			[remarkMath, { singleDollarTextMath: false }],
-		],
-		rehypePlugins: [
-			[rehypeExternalLinks, { target: "_blank", rel: ["nofollow, noopener, noreferrer"] }],
-			[rehypeKatex, { output: "htmlAndMathml" }],
-		],
-		remarkRehype: { footnoteLabelProperties: { className: [""] } },
-		shikiConfig: {
-			theme: "dracula",
-			wrap: true,
-		},
+	image: {
+		domains: ["webmention.io", "imgs.xkcd.com"],
 	},
 	integrations: [
 		expressiveCode(expressiveCodeOptions),
@@ -39,29 +26,54 @@ export default defineConfig({
 			applyBaseStyles: false,
 		}),
 		sitemap(),
-
 		mdx(),
 	],
-	image: {
-		domains: ["webmention.io", "imgs.xkcd.com"],
+	markdown: {
+		rehypePlugins: [
+			[
+				rehypeExternalLinks,
+				{
+					rel: ["nofollow, noopener, noreferrer"],
+					target: "_blank",
+				},
+			],
+			[rehypeKatex, { output: "htmlAndMathml" }],
+		],
+		remarkPlugins: [
+			remarkUnwrapImages,
+			remarkReadingTime,
+			[remarkMath, { singleDollarTextMath: false }],
+		],
+		remarkRehype: {
+			footnoteLabelProperties: {
+				className: [""],
+			},
+		},
+		shikiConfig: {
+			theme: "dracula",
+			wrap: true,
+		},
 	},
 	// https://docs.astro.build/en/guides/prefetch/
 	prefetch: true,
+	// ! Please remember to replace the following site property with your own domain
+	site: "https://gravydigger.net/",
 	vite: {
-		plugins: [rawFonts([".ttf", ".woff"])],
 		optimizeDeps: {
 			exclude: ["@resvg/resvg-js"],
 		},
+		plugins: [rawFonts([".ttf", ".woff"])],
 	},
 });
 
-function rawFonts(ext: Array<string>) {
+function rawFonts(ext: string[]) {
 	return {
 		name: "vite-plugin-raw-fonts",
-		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-		// @ts-ignore:next-line
+		// @ts-expect-error:next-line
 		transform(_, id) {
+			// eslint-disable-next-line
 			if (ext.some((e) => id.endsWith(e))) {
+				// eslint-disable-next-line
 				const buffer = fs.readFileSync(id);
 				return {
 					code: `export default ${JSON.stringify(buffer)}`,
