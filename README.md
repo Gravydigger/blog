@@ -13,4 +13,5 @@ This website was creating using the theme [Astro Cactus](https://github.com/chri
 
 ## License
 
-MIT
+Source Code: MIT
+Blog Content: CC BY-NC 4.0
