@@ -24,7 +24,7 @@ interface Props {
 const { page, uniqueTags } = Astro.props;
 
 const meta = {
-	description: "Read my collection of posts and the things that interest me.",
+	description: "Read my collection of posts and the things that interest me",
 	title: "Posts",
 };
 
@@ -79,7 +79,7 @@ const descYearKeys = Object.keys(groupedByYear).sort((a, b) => +b - +a);
 		{
 			!!uniqueTags.length && (
 				<aside>
-					<h2 class="mb-4 flex items-center text-lg font-semibold">
+					<h2 class="title mb-4 flex items-center text-lg">
 						<svg
 							aria-hidden="true"
 							class="h-6 w-6"

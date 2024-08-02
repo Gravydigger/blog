@@ -24,6 +24,7 @@ export default defineConfig({
 		icon(),
 		tailwind({
 			applyBaseStyles: false,
+			nesting: true,
 		}),
 		sitemap(),
 		mdx(),
